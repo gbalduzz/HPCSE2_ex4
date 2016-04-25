@@ -1,10 +1,14 @@
-#pragma once
-#include <array>
+#ifndef PARTICLES_H
+#define PARTICLES_H
+#include <vector>
 #include <complex>
 
 using Complex = std::complex<double>;
 
 struct Particles{
-    std::array<Complex,N> z;
-    std::array<double,N> w;
+    std::vector<Complex> z;
+    std::vector<double> w;
+    Particles(int N):z(N),w(N){}
     };
+
+#endif

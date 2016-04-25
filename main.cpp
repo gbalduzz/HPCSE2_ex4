@@ -5,6 +5,7 @@ const static int N=1e6;
 #include <string>
 #include "include/file_IO.h"
 #include "include/particles.h"
+#include "include/profiler.h"
 #include "include/P2E.h"
 #include "include/E2P.h"
 using std::cout; using std::endl;
