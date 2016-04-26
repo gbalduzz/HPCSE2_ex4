@@ -17,17 +17,16 @@ int main(int argc, char** argv) {
     std::string filename="sources.bin";
     read_from_file(p,filename);
     int k=5;
+    cout<<"\nExpansion order: "<<k<<endl;
     if(argc>1) k=std::atoi(argv[1]);
     vector<Complex> c(k);
     {
         Profiler prof("P2E");
         c = P2E(p, k);
     }
-    cout<<"\nExpansion order: "<<k<<endl;
-    Complex z(10,10);
+    Complex z(1,1);
     double s=E2P(z,c);
-    cout<<"\nStream: "<<s<<endl;
-    cout<<"coeff:"<<endl;
-    for(int i=0;i<c.size();i++) cout<<c[i]<<endl;
+    bool correct = check_from_file(s,k,"output.dat");
+    if(correct) cout<<"Correct result!"<<endl;
 }
 
