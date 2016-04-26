@@ -16,7 +16,7 @@ int main(int argc, char** argv) {
     Particles p(N);
     std::string filename="sources.bin";
     read_from_file(p,filename);
-    int k=5;
+    int k=20;
     cout<<"\nExpansion order: "<<k<<endl;
     if(argc>1) k=std::atoi(argv[1]);
     vector<Complex> c(k);
