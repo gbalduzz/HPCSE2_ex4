@@ -1,4 +1,5 @@
 const static int N=1e6;
+const static int k=20;
 #include <iostream>
 #include <vector>
 #include <complex>
@@ -18,7 +19,6 @@ int main(int argc, char** argv) {
     read_from_file(p,filename);
     int k=5;
     cout<<"\nExpansion order: "<<k<<endl;
-    if(argc>1) k=std::atoi(argv[1]);
     vector<Complex> c(k);
     {
         Profiler prof("P2E");

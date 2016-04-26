@@ -6,9 +6,8 @@
 using Complex = std::complex<double>;
 
 struct Particles{
-    std::vector<Complex> z;
-    std::vector<double> w;
-    Particles(int N):z(N),w(N){}
+    std::vector<double> w,x,y;
+    Particles(int N):x(N),y(N),w(N){}
     };
 
 #endif
