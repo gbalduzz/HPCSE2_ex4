@@ -17,7 +17,6 @@ int main(int argc, char** argv) {
     Particles p(N);
     std::string filename="sources.bin";
     read_from_file(p,filename);
-    int k=5;
     cout<<"\nExpansion order: "<<k<<endl;
     vector<Complex> c(k);
     {
