@@ -23,13 +23,11 @@ int main(int argc, char** argv) {
         Profiler prof("P2E");
         P2E<k>(p,c_re,c_im);
     }
-    Complex z(1,1);
+    double z_re=1,z_im=1;
     double s;
     {
         Profiler prf("E2P");
-        vector<Complex> c(k+1);
-        for(int i=0;i<k+1;i++) c[i]=Complex(c_re[i],c_im[i]);
-        s=E2P(z,c);
+        s=E2P<k>(z_re,z_im,c_re,c_im);
     }
 
     bool correct = check_from_file(s,k,"output.dat");
