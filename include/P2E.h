@@ -4,27 +4,42 @@
 #pragma once
 #include "particles.h"
 #include <complex>
-#include <vector>
 #include <cmath>
-using std::vector;
-using Complex = std::complex<double>;
+
+template<int k,int K>
+struct sum_kth_coeff{
+        inline static void execute (double* c_re,double* c_im,
+                                    const double x,const double y,const double w,double z_re,double z_im){
+            //compute z=(x+i y)^k
+            z_re=z_re*x-z_im*y;
+            z_im=z_re*y+z_im*x;
+
+            c_re[k]-=w*z_re/k;
+            c_im[k]-=w*z_im/k;
+            sum_kth_coeff<k+1,K>::execute(c_re,c_im,x,y,w,z_re,z_im);
+        }
+};
 
 template<int k>
-inline void sum_kth_coeff(vector<Complex>& c,const Particles& p, const int i){
-    c[k]-=p.w[i]*std::pow(Complex(p.x[i],p.y[i]),k)/Complex(k,0);
-    sum_kth_coeff<k-1>(c,p,i);
-}
+struct sum_kth_coeff<k,k>{
+    inline static void execute (double* c_re,double* c_im,
+                                const double x,const double y,const double w,double z_re,double z_im){
+        //compute z=(x+i y)^k
+        z_re=z_re*x-z_im*y;
+        z_im=z_re*y+z_im*x;
 
-template<>
-inline void sum_kth_coeff<0>(vector<Complex>& c,const Particles& p, const int i){
-    c[0]+=p.w[i];
-}
+        c_re[k]-=w*z_re/k;
+        c_im[k]-=w*z_im/k;
+    }//end recursion
+};
 
 template <int k>
-vector<Complex> P2E(const Particles& p){
-    vector<Complex> coeff(k+1,0);
+void P2E(const Particles& p, double* c_re,double* c_im){ //c_re and c_im must have k+1 reserved spaces
+   for(int i=0;i<k+1;i++) c_re[i]=c_im[i]=0;
+
     for(int i=0;i<p.N;i++){
-        sum_kth_coeff<k>(coeff,p,i);
+        c_re[0]+=p.w[i];
+        sum_kth_coeff<1,k>::execute(c_re,c_im,p.x[i],p.y[i],p.w[i],1.,0.);
     }
-    return coeff;
+
 }
