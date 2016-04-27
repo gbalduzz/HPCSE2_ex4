@@ -10,8 +10,8 @@
 
 
 
-
-void P2E(const Particles& p, const int k,double* c_re,double* c_im){
+template<int k>
+void P2E(const Particles& p,double* c_re,double* c_im){
     double z_re,z_im,z_temp; //will store (x+ i y) ^k
    for(int i=0;i<k+1;i++) c_re[i]=c_im[i]=0;
 

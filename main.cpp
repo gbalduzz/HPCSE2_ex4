@@ -21,12 +21,17 @@ int main(int argc, char** argv) {
     double c_re[k+1],c_im[k+1];
     {
         Profiler prof("P2E");
-        P2E(p,k,c_re,c_im);
+        P2E<k>(p,c_re,c_im);
     }
     Complex z(1,1);
-    vector<Complex> c(k+1);
-    for(int i=0;i<k+1;i++) c[i]=Complex(c_re[i],c_im[i]);
-    double s=E2P(z,c);
+    double s;
+    {
+        Profiler prf("E2P");
+        vector<Complex> c(k+1);
+        for(int i=0;i<k+1;i++) c[i]=Complex(c_re[i],c_im[i]);
+        s=E2P(z,c);
+    }
+
     bool correct = check_from_file(s,k,"output.dat");
     if(correct) cout<<"Correct result!"<<endl;
 }
