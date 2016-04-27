@@ -13,8 +13,10 @@ vector<complex> P2E(const Particles& p,const int k){
     vector<complex> coeff(k+1,0);
 for(int i=0;i<N;i++){
     coeff[0]+=p.w[i];
-    for(int j=1;j<=k;j++) coeff[j]-=p.w[i]*std::pow(p.z[i],j)/complex(j,0);
+    for(int j=1;j<=k;j++) coeff[j]-=p.w[i]*std::pow(p.z[i],j);
 }
-    return coeff;
+
+ for(int j=2;j<=k;j++) coeff[j]/=complex(j,0);
+ return coeff;
 }
 
