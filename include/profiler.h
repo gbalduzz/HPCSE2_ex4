@@ -14,7 +14,7 @@ public:
     Profiler(std::string n0="",bool frozen=0);
     inline ~Profiler();
     void start();
-    void stop(bool print=true);
+    double stop(bool print=true);
 private:
     std::string name;
     timespec t0,t1;
@@ -41,11 +41,13 @@ void Profiler::start() {
     clock_gettime(CLOCK_MONOTONIC, &t0);
 }
 
-void Profiler::stop(bool print) {
+double Profiler::stop(bool print) {
     clock_gettime(CLOCK_MONOTONIC, &t1);
     mute=true;
+    double time=elapsed();
     if(print)
-        std::cout<<"function "<<name<<"\t took "<<elapsed()<< "\t s to complete"<<std::endl;
+        std::cout<<"function "<<name<<"\t took "<<time<< "\t s to complete"<<std::endl;
+    return time;
 }
 
 

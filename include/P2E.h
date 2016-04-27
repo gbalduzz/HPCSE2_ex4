@@ -8,10 +8,7 @@
 #include <cmath>
 
 
-
-
-template<int k>
-void P2E(const Particles& p,double* c_re,double* c_im){
+void P2E( Particles& p,double* c_re,double* c_im){
     double z_re,z_im,z_temp; //will store (x+ i y) ^k
    for(int i=0;i<k+1;i++) c_re[i]=c_im[i]=0;
 
@@ -26,5 +23,6 @@ void P2E(const Particles& p,double* c_re,double* c_im){
             c_im[j]-=p.w[i]*z_im;
         }
     }
+    //divide by coeff order
     for(int i=2;i<k+1;i++) {c_re[i]/=i;c_im[i]/=i;}
 }
