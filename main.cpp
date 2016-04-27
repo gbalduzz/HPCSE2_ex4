@@ -1,6 +1,7 @@
 const static int N=1e6;
 const static int k=20;
 #include <iostream>
+#include "include/Performance_measurer.h"
 #include "include/file_IO.h"
 #include "include/particles.h"
 #include "include/profiler.h"
@@ -15,11 +16,11 @@ int main(int argc, char** argv) {
     read_from_file(p,filename);
     cout<<"\nExpansion order: "<<k<<endl;
     double c_re[k+1],c_im[k+1];
-    {
-        Profiler prof("P2E");
-        P2E<k>(p,c_re,c_im);
-    }
-    const double z_re=1,z_im=1;
+
+    std::pair<double,double> tts = Performance(100,P2E<k>,p,c_re,c_im);
+    cout<<"P2E time to solution: "<<tts.first<<" +- "<<tts.second<<endl;
+
+    double z_re=1,z_im=1;
     double s;
     {
         Profiler pr("E2P");
