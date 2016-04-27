@@ -26,7 +26,7 @@ bool check_from_file(double res,int k, const std::string& filename){
     double ref;
     inp>>ref>>ref;
     inp.close();
-    bool check =  std::abs(ref-res) < 1e-3;
+    bool check =  std::abs((ref-res)/ref) < 1e-6;
     if(not check)
     {
         cout.precision(15);
