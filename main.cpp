@@ -1,16 +1,12 @@
 const static int N=1e6;
 const static int k=20;
 #include <iostream>
-#include <vector>
-#include <complex>
-#include <string>
 #include "include/file_IO.h"
 #include "include/particles.h"
 #include "include/profiler.h"
 #include "include/P2E.h"
 #include "include/E2P.h"
 using std::cout; using std::endl;
-using std::vector;
 
 
 int main(int argc, char** argv) {
@@ -23,11 +19,12 @@ int main(int argc, char** argv) {
         Profiler prof("P2E");
         P2E<k>(p,c_re,c_im);
     }
-
-    Complex z(1,1);
-    vector<Complex> c(k+1);
-    for(int i=0;i<k+1;i++) c[i]=Complex(c_re[i],c_im[i]);
-    double s=E2P(z,c);
+    const double z_re=1,z_im=1;
+    double s;
+    {
+        Profiler pr("E2P");
+        s=E2P<k>(z_re,z_im,c_re,c_im);
+    }
     bool correct = check_from_file(s,k,"output.dat");
     if(correct) cout<<"Correct result!"<<endl;
 }
