@@ -21,7 +21,7 @@ int main(int argc, char** argv) {
     vector<Complex> c(k);
     {
         Profiler prof("P2E");
-        c = P2E(p, k);
+        c = P2E<k>(p);
     }
     Complex z(1,1);
     double s=E2P(z,c);
