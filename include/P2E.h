@@ -6,25 +6,23 @@
 #include <complex>
 #include <vector>
 #include <cmath>
-using std::vector;
-using Complex = std::complex<double>;
 
-template<int k>
-inline void sum_kth_coeff(vector<Complex>& c,const Particles& p, const int i){
-    c[k]-=p.w[i]*std::pow(Complex(p.x[i],p.y[i]),k)/Complex(k,0);
-    sum_kth_coeff<k-1>(c,p,i);
-}
 
-template<>
-inline void sum_kth_coeff<0>(vector<Complex>& c,const Particles& p, const int i){
-    c[0]+=p.w[i];
-}
 
-template <int k>
-vector<Complex> P2E(const Particles& p){
-    vector<Complex> coeff(k+1,0);
+
+
+void P2E(const Particles& p, const int k,double* c_re,double* c_im){
+    double z_re,z_im; //will store (x+ i y) ^k
+   for(int i=0;i<k+1;i++) c_re[i]=c_im[i]=0;
+
     for(int i=0;i<p.N;i++){
-        sum_kth_coeff<k>(coeff,p,i);
+        c_re[0]+=p.w[i];
+        z_re=1; z_im=0;
+        for(int j=1;j<k;j++){
+            z_re=z_re*p.x[i]-z_im*p.y[i];
+            z_im=z_re*p.y[i]+z_im*p.x[i];
+            c_re[j]-=p.w[i]*z_re/j;
+            c_im[j]-=p.w[i]*z_im/j;
+        }
     }
-    return coeff;
 }

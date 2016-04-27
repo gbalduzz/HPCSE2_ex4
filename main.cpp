@@ -18,12 +18,14 @@ int main(int argc, char** argv) {
     std::string filename="sources.bin";
     read_from_file(p,filename);
     cout<<"\nExpansion order: "<<k<<endl;
-    vector<Complex> c(k);
+    double c_re[k+1],c_im[k+1];
     {
         Profiler prof("P2E");
-        c = P2E<k>(p);
+        P2E(p,k,c_re,c_im);
     }
     Complex z(1,1);
+    vector<Complex> c(k+1);
+    for(int i=0;i<k+1;i++) c[i]=Complex(c_re[i],c_im[i]);
     double s=E2P(z,c);
     bool correct = check_from_file(s,k,"output.dat");
     if(correct) cout<<"Correct result!"<<endl;
