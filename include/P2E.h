@@ -11,8 +11,9 @@ struct sum_kth_coeff{
         inline static void execute (double* c_re,double* c_im,
                                     const double x,const double y,const double w,double z_re,double z_im){
             //compute z=(x+i y)^k
-            z_re=z_re*x-z_im*y;
+            double z_tmp=z_re*x-z_im*y;
             z_im=z_re*y+z_im*x;
+            z_re=z_tmp;
 
             c_re[k]-=w*z_re/k;
             c_im[k]-=w*z_im/k;
@@ -24,12 +25,8 @@ template<int k>
 struct sum_kth_coeff<k,k>{
     inline static void execute (double* c_re,double* c_im,
                                 const double x,const double y,const double w,double z_re,double z_im){
-        //compute z=(x+i y)^k
-        z_re=z_re*x-z_im*y;
-        z_im=z_re*y+z_im*x;
-
-        c_re[k]-=w*z_re/k;
-        c_im[k]-=w*z_im/k;
+        c_re[k]-=w*(z_re*x-z_im*y)/k;
+        c_im[k]-=w*(z_re*y+z_im*x)/k;
     }//end recursion
 };
 
