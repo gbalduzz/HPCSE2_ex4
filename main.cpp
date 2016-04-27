@@ -25,7 +25,11 @@ int main(int argc, char** argv) {
         c = P2E(p, k);
     }
     Complex z(1,1);
-    double s=E2P(z,c);
+    double s;
+    {
+        Profiler prf("E2P");
+        s = E2P(z, c);
+    }
     bool correct = check_from_file(s,k,"output.dat");
     if(correct) cout<<"Correct result!"<<endl;
 }
