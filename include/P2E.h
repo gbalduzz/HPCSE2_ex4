@@ -15,8 +15,8 @@ struct sum_kth_coeff{
             z_im=z_re*y+z_im*x;
             z_re=z_tmp;
 
-            c_re[k]-=w*z_re/k;
-            c_im[k]-=w*z_im/k;
+            c_re[k]-=w*z_re;
+            c_im[k]-=w*z_im;
             sum_kth_coeff<k+1,K>::execute(c_re,c_im,x,y,w,z_re,z_im);
         }
 };
@@ -25,8 +25,8 @@ template<int k>
 struct sum_kth_coeff<k,k>{
     inline static void execute (double* c_re,double* c_im,
                                 const double x,const double y,const double w,double z_re,double z_im){
-        c_re[k]-=w*(z_re*x-z_im*y)/k;
-        c_im[k]-=w*(z_re*y+z_im*x)/k;
+        c_re[k]-=w*(z_re*x-z_im*y);
+        c_im[k]-=w*(z_re*y+z_im*x);
     }//end recursion
 };
 
@@ -38,5 +38,6 @@ void P2E(const Particles& p, double* c_re,double* c_im){ //c_re and c_im must ha
         c_re[0]+=p.w[i];
         sum_kth_coeff<1,k>::execute(c_re,c_im,p.x[i],p.y[i],p.w[i],1.,0.);
     }
+    for(int i=2;i<k+1;i++) {c_re[i]/=i;c_im[i]/=i;}
 
 }
