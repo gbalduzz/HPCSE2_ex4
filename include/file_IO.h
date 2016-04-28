@@ -9,10 +9,16 @@
 void read_from_file(Particles& p, const std::string& filename){
     std::ifstream inp(filename.c_str(),std::ios::binary);
     assert(inp);
+    std::vector<double> x(N),y(N),w(N);
     const int size=N*sizeof(double);
-    inp.read((char*)p.x.data(),size);
-    inp.read((char*)p.y.data(),size);
-    inp.read((char*)p.w.data(),size);
+    inp.read((char*)x.data(),size);
+    inp.read((char*)y.data(),size);
+    inp.read((char*)w.data(),size);
+    for(int i=0;i<N;i++){
+        p[i].x=x[i];
+        p[i].y=y[i];
+        p[i].w=w[i];
+    }
     inp.close();
 }
 

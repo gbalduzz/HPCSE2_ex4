@@ -4,10 +4,10 @@
 
 using Complex = std::complex<double>;
 
-struct Particles{
-    const int N;
-    std::vector<double> w,x,y;
-    Particles(int N):x(N),y(N),w(N),N(N){}
-    };
+struct Particle{
+    double w,x,y;
+};
+
+using Particles=std::vector<Particle>;
 
 #endif

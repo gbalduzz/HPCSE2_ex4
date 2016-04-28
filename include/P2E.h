@@ -34,9 +34,9 @@ template <int k>
 void P2E(const Particles& p, double* c_re,double* c_im){ //c_re and c_im must have k+1 reserved spaces
    for(int i=0;i<k+1;i++) c_re[i]=c_im[i]=0;
 
-    for(int i=0;i<p.N;i++){
-        c_re[0]+=p.w[i];
-        sum_kth_coeff<1,k>::execute(c_re,c_im,p.x[i],p.y[i],p.w[i],1.,0.);
+    for(int i=0;i<p.size();i++){
+        c_re[0]+=p[i].w;
+        sum_kth_coeff<1,k>::execute(c_re,c_im,p[i].x,p[i].y,p[i].w,1.,0.);
     }
     //divide by coeff order
     for(int i=2;i<k+1;i++) {c_re[i]/=i;c_im[i]/=i;}
