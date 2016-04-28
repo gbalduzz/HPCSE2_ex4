@@ -17,7 +17,7 @@ int main(int argc, char** argv) {
     cout<<"\nExpansion order: "<<k<<endl;
     double c_re[k+1],c_im[k+1];
 
-    std::pair<double,double> tts = Performance(100,P2E<k>,p,c_re,c_im);
+    std::pair<double,double> tts = Performance(10,P2E<k>,p,c_re,c_im);
     cout<<"P2E time to solution: "<<tts.first<<" +- "<<tts.second<<endl;
 
     double z_re=1,z_im=1;
