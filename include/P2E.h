@@ -11,7 +11,7 @@ struct sum_kth_coeff{
         inline static void execute (double* c_re,double* c_im,
                                     const double x,const double y,const double w,double z_re,double z_im){
             //compute z=(x+i y)^k
-            double z_tmp=z_re*x-z_im*y;
+            const double z_tmp=z_re*x-z_im*y;
             z_im=z_re*y+z_im*x;
             z_re=z_tmp;
 
